@@ -1,0 +1,28 @@
+#!/bin/bash
+
+directory=$1
+
+if [ ! -d $directory ]
+then
+        echo "Not a directory!"
+        exit 1
+fi
+
+if [ "x$directory" == "x" ]
+then
+        echo "Empty directory path!"
+        exit 2
+fi
+
+file_list=$(ls $directory)
+
+REGEX='^.*\.(bak|backup|tmp)$'
+
+for item in $file_list
+do
+        if [[ $item =~ $REGEX ]]
+        then
+                echo $item
+                rm $directory/$item
+        fi
+done
